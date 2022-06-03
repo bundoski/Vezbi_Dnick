@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Profile</title>
+    <!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+    <style>
+        a{
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+<div class="container-fluid bg-dark">
+    <a href="/profile" class="display-6 text-white me-5">My Profile</a>
+    <a href="/blockedUsers" class="display-6 text-white me-5">Blocked Users</a>
+    <a href="/posts" class="display-6 text-white me-5">Posts</a>
+    <a href="/add/post" class="display-6 text-white me-5">Add Post</a>
+</div>
+<div class="container col-6 bg-info border rounded">
+    <h1 class="text-center">Profile Information</h1>
+    <hr/>
+    <div class="row">
+        <div class="col-6" style="border-right:1px solid black">
+            <div class="row">
+                <div class="col-6">
+                    <h5>Username:</h5>
+                </div>
+                <div class="col-6 text-end">
+                    <h5>{{ profile.user.username }}</h5>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <h5>First name:</h5>
+                </div>
+                <div class="col-6 text-end">
+                    <h5>{{ profile.first_name }}</h5>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <h5>Last name:</h5>
+                </div>
+                <div class="col-6 text-end">
+                    <h5>{{ profile.last_name }}</h5>
+                </div>
+            </div>
+    <hr/>
+    <h5>Interests:</h5><p>{{ profile.interests }}</p>
+    <h5>Skills:</h5><p>{{ profile.skills }}</p>
+    <h5>Profession:</h5><p>{{ profile.profession }}</p>
+        </div>
+        <div class="col-6 text-center">
+            <h5>Profile image</h5>
+            <img src="{{ MEDIA_URL }}{{ profile.image.url }}" style="height:250px;"/>
+        </div>
+    </div>
+
+
+</div>
+
+    <hr/>
+    <h1>My Posts</h1>
+{% if posts.count == 0 %}
+    <h1>You have 0 posts</h1>
+{% else %}
+    <table>
+        <thead>
+            <tr>
+                <td>Title</td>
+                <td>Author</td>
+                <td>Content</td>
+                <td>Date Created</td>
+                <td>Last Modified</td>
+                <td>File</td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for post in posts %}
+                <tr>
+                    <td>{{ post.title }}</td>
+                    <td>{{ post.author.first_name }}" "{{ post.author.last_name }}</td>
+                    <td>{{ post.content }}</td>
+                    <td>{{ post.date_created }}</td>
+                    <td>{{ post.last_modified }}</td>
+                    <td><p>File: <a href="{{ MEDIA_URL }}{{ post.file.url }}">{{ post.file }}</a></p></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endif %}
+</body>
+</html>
